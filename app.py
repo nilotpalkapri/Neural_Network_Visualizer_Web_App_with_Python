@@ -1,5 +1,4 @@
 
-#!pip install streamlit
 import streamlit as st
 import json
 import requests
@@ -7,18 +6,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 import os
 
-URI = 'http://127.0.0.1:5000'
+URI = 'http://127.0.0.1:5000/'
 
 st.title('Nural Network Visualizer')
 st.sidebar.markdown('# Input Image')
 
 if st.button('Get random prediction'):
     response = requests.post(URI, data={})
-    response = json.load(response.text)
-    pred = response.get('prediction')
+    response = json.loads(response.text)
+    preds = response.get('prediction')
     image = response.get('image')
-    image = np.reshape(image, (28*28))
-    
+    image = np.reshape(image, (28, 28))
     st.sidebar.image(image, width=150)
     
     for layer, p in enumerate(preds):

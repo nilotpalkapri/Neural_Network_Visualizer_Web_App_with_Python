@@ -1,6 +1,5 @@
 
 import json
-
 import tensorflow as tf
 import numpy as np
 import os
@@ -9,14 +8,17 @@ import string
 
 #!conda install -c conda-forge flask --yes
 from flask import Flask, request
+from flask import render_template
 
 app = Flask(__name__)
 
-model = tf.keras.models.load_model('Neural_Network_Visualizer_Web_App_with_Python/model.h5')
+model = tf.keras.models.load_model('model.h5')
+
 feature_model = tf.keras.models.Model(
     model.inputs,
     [layer.output for layer in model.layers]
 )
+
 _, (x_test, _) = tf.keras.datasets.mnist.load_data()
 x_test = x_test/255.0
 
@@ -35,9 +37,13 @@ def index():
             'prediction': final_preds,
             'image': image.tolist()
         })
+    else:
+        return render_template('index.html')
         
     return 'Welcome to the model server!'
 
 if __name__ == '__main__':
+        
     app.run()
+    
     
