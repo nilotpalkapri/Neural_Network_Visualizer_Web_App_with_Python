@@ -6,18 +6,12 @@ import os
 import random
 import string
 
-#!conda install -c conda-forge flask --yes
 from flask import Flask, request
-from flask import render_template
 
 app = Flask(__name__)
 
 model = tf.keras.models.load_model('model.h5')
-
-feature_model = tf.keras.models.Model(
-    model.inputs,
-    [layer.output for layer in model.layers]
-)
+feature_model = tf.keras.models.Model(model.inputs,[layer.output for layer in model.layers])
 
 _, (x_test, _) = tf.keras.datasets.mnist.load_data()
 x_test = x_test/255.0
@@ -33,17 +27,9 @@ def index():
     if request.method == 'POST':
         preds, image = get_prediction()
         final_preds = [p.tolist() for p in preds]
-        return json.dumps({
-            'prediction': final_preds,
-            'image': image.tolist()
-        })
-    else:
-        return render_template('index.html')
-        
+        return json.dumps({'prediction': final_preds, 'image': image.tolist()})
     return 'Welcome to the model server!'
 
 if __name__ == '__main__':
-        
-    app.run()
-    
+    app.run()  
     

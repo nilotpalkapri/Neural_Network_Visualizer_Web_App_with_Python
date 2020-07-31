@@ -1,7 +1,7 @@
 
+import requests
 import streamlit as st
 import json
-import requests
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -13,7 +13,9 @@ st.sidebar.markdown('# Input Image')
 
 if st.button('Get random prediction'):
     response = requests.post(URI, data={})
+    st.write(response.text)
     response = json.loads(response.text)
+    #response = response.json()
     preds = response.get('prediction')
     image = response.get('image')
     image = np.reshape(image, (28, 28))
