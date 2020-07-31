@@ -1,5 +1,5 @@
 streamlit
-numpy
+numpy==1.16.2
 matplotlib
 tensorflow
 flask
