@@ -1,5 +1,4 @@
 streamlit
 numpy==1.6.2
 matplotlib
-json
 tensorflow==2.2.0
